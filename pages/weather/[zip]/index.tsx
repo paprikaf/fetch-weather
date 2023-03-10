@@ -192,15 +192,10 @@ const Weather: React.FC<{
               {getDayOfWeek(day[index].dt)}
             </h3>
             {day.map((hourforcast) => (
-              <div>
+              <div key="lol">
                 <p className="text-gray-400">
                   {formatTimestampToHour(hourforcast.dt)}
                 </p>
-                {/* <img
-                src={day.icon}
-                alt={day.description}
-                className="mx-auto"
-              /> */}
                 <p className="text-gray-700">
                   Temprature: {Math.round(hourforcast.main.temp)}
                   &deg;F
@@ -210,7 +205,6 @@ const Weather: React.FC<{
                   {Math.round(hourforcast.main.feels_like)}
                   &deg;F
                 </p>
-                {/* <p className="text-gray-500">{day.description}</p> */}
               </div>
             ))}
           </div>
@@ -221,47 +215,3 @@ const Weather: React.FC<{
 };
 
 export default Weather;
-
-// <div className="max-w-lg mx-auto p-4">
-//   {/* <div className="bg-gray-200 rounded-lg shadow-md p-4"> */}
-//   <div className="flex justify-between items-center mb-4">
-//     <h2 className="text-lg font-semibold">
-//       5-Day Weather Forecast in {weatherData.city.name}
-//     </h2>
-//     <div className="flex items-center">
-//       <span className="text-gray-600 mr-2">Zip Code:</span>
-//       <input
-//         type="text"
-//         className="border border-gray-300 rounded-md p-2"
-//         placeholder="Enter zip code"
-//       />
-//       <button className="bg-green-500 hover:bg-green-400 text-white px-4 py-2 rounded-md ml-2">
-//         Search
-//       </button>
-//     </div>
-//   </div>
-//   {oneDayForcast.map((day, index) => (
-//     <div key={index} className="grid grid-cols-5 gap-4">
-//       <div className="bg-white rounded-lg shadow-md p-4 text-center">
-//         {day.map((hourforcast) => (
-//           <div>
-//             <div className="text-gray-600 mb-2">
-//               {formatTimestamp(hourforcast.dt)}
-//             </div>
-//             <div className="text-xl font-bold mb-2">
-//               Temprature : {Math.round(hourforcast.main.temp)}
-//               &deg;F
-//             </div>
-//             <img
-//               src="https://www.weatherbit.io/static/img/icons/r01d.png"
-//               alt="Weather Icon"
-//               className="mx-auto mb-2"
-//             />
-//             <div className="text-gray-600">Rain</div>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   ))}
-
-// </div>

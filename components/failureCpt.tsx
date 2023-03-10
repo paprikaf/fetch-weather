@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 const FailureComponent: React.FC<{ error: string }> = ({ error }) => {
   const router = useRouter();
@@ -8,8 +9,10 @@ const FailureComponent: React.FC<{ error: string }> = ({ error }) => {
       <div className="flex-grow flex flex-col">
         <div className="transition duration-1000 delay-500 hover:delay-0 w-2">
           <div className="fixed top-0 left-0 right-0 bottom-0 w-full h-screen z-50 overflow-hidden bg-gray-700 opacity-90 flex flex-col items-center justify-center">
-            <img
+            <Image
               className="w-20 h-20"
+              width={20}
+              height={20}
               src="/raining-umbrella.gif"
               alt="sad"
             />
