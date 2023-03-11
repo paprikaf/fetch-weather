@@ -40,7 +40,7 @@ interface WeatherData {
   };
 }
 
-enum UnitOfMeasurementType {
+export enum UnitOfMeasurementType {
   standard = 'standard',
   metric = 'metric',
   imperial = 'imperial',
@@ -86,7 +86,7 @@ const getDayOfWeek = (timestamp: number): string => {
   return daysOfWeek[dayIndex];
 };
 
-const Weather: React.FC<{
+const WeatherComponent: React.FC<{
   zipCode: string;
   unit: UnitOfMeasurementType;
 }> = ({ zipCode, unit }) => {
@@ -95,9 +95,7 @@ const Weather: React.FC<{
   const [weatherData, setWeatherData] = useState<WeatherData | null>(
     null
   );
-  const [inputValue, setInputValue] = useState<string>(
-    zipCode ? zipCode : ''
-  );
+  const [inputValue, setInputValue] = useState<string>('');
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     router.push(`${inputValue}`);
@@ -123,6 +121,7 @@ const Weather: React.FC<{
       .json((data) => setWeatherData(data))
       .catch((err) => setError(err));
   }, [zipCode]);
+
   //TODO:: Error component
   if (error) {
     return <FailureComponent error={error.message} />;
@@ -131,7 +130,6 @@ const Weather: React.FC<{
   if (!weatherData) {
     return <LoadingComponenet />;
   }
-  console.log('weatherData', weatherData);
   const fiveDaysForcast = weatherData.list;
   const oneDayForcast = [];
   for (let i = 0; i < fiveDaysForcast.length; i += 8) {
@@ -155,7 +153,7 @@ const Weather: React.FC<{
                 type="text"
                 className="border border-gray-300 rounded-md p-2"
                 placeholder="Enter zip code"
-                value={inputValue ? inputValue : zipCode}
+                value={inputValue}
                 onChange={handleInputChange}
               />
               <button
@@ -213,4 +211,4 @@ const Weather: React.FC<{
   );
 };
 
-export default Weather;
+export default WeatherComponent;
