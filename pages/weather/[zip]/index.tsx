@@ -83,8 +83,6 @@ const getDayOfWeek = (timestamp: number): string => {
   ];
   const date = new Date(timestamp * 1000);
   const dayIndex = date.getDay();
-  console.log('dayIndex', dayIndex);
-  console.log('daysOfWeek', daysOfWeek[dayIndex]);
   return daysOfWeek[dayIndex];
 };
 
@@ -97,7 +95,9 @@ const Weather: React.FC<{
   const [weatherData, setWeatherData] = useState<WeatherData | null>(
     null
   );
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>(
+    zipCode ? zipCode : ''
+  );
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     router.push(`${inputValue}`);
@@ -108,7 +108,7 @@ const Weather: React.FC<{
     setInputValue(event.target.value);
   };
   //TODO: use Key
-  const key = process.env.API_KEY;
+  const key = process.env.KEY;
   const [error, setError] = useState<Error | null>(null);
   //TODO: add  unitof measurment condition eg metric
   useEffect(() => {
@@ -138,7 +138,6 @@ const Weather: React.FC<{
     const chunk = fiveDaysForcast.slice(i, i + 8);
     oneDayForcast.push(chunk);
   }
-  console.log('oneDayForcast', oneDayForcast);
   //TODO: create forcast component
   return (
     <div>
@@ -156,7 +155,7 @@ const Weather: React.FC<{
                 type="text"
                 className="border border-gray-300 rounded-md p-2"
                 placeholder="Enter zip code"
-                value={inputValue}
+                value={inputValue ? inputValue : zipCode}
                 onChange={handleInputChange}
               />
               <button
@@ -191,8 +190,8 @@ const Weather: React.FC<{
             <h3 className="text-gray-700 font-semibold">
               {getDayOfWeek(day[index].dt)}
             </h3>
-            {day.map((hourforcast) => (
-              <div key="lol">
+            {day.map((hourforcast, i) => (
+              <div key={i}>
                 <p className="text-gray-400">
                   {formatTimestampToHour(hourforcast.dt)}
                 </p>
