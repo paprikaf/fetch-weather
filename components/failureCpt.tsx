@@ -1,8 +1,11 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { WeatherAPIError } from '@/pages/weather/[zip]';
 
-const FailureComponent: React.FC<{ error: string }> = ({ error }) => {
+const FailureComponent: React.FC<{ error: WeatherAPIError }> = ({
+  error,
+}) => {
   const router = useRouter();
   return (
     <div className="py-6 px-6 md:px-12 flex flex-col h-screen">
@@ -19,7 +22,9 @@ const FailureComponent: React.FC<{ error: string }> = ({ error }) => {
             <p className="w-1/3 text-center text-white">
               KABOUCH 💥 Something went wrong...
             </p>
-            <p className="w-1/3 text-center text-white">{error}</p>
+            <p className="w-1/3 text-center text-white">
+              {error.cod} - {error.message}
+            </p>
             <div className="hover:bg-teal-500">
               {' '}
               <button

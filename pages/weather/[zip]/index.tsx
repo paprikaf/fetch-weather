@@ -6,6 +6,12 @@ import Link from 'next/link';
 import LoadingComponenet from '@/components/loadingCpt';
 import FailureComponent from '@/components/failureCpt';
 
+//TODO: add API error interface
+export interface WeatherAPIError {
+  cod: string;
+  message: string;
+}
+
 //TODO: create 3 hour forcast interface
 interface forcast {
   dt: number;
@@ -122,9 +128,22 @@ const WeatherComponent: React.FC<{
       .catch((err) => setError(err));
   }, [zipCode]);
 
+  const errorToJSon: WeatherAPIError = error
+    ? JSON.parse(error.message)
+    : error;
+
+  //TODO: convert obj to array with map
+  const convertValue = (value: WeatherAPIError, key?: number) => {
+    if (value && typeof value === 'object') {
+      const val = new Map(Object.entries(value));
+      return val;
+    }
+    return value;
+  };
+
   //TODO:: Error component
   if (error) {
-    return <FailureComponent error={error.message} />;
+    return <FailureComponent error={errorToJSon} />;
   }
   //TODO:add a loading component
   if (!weatherData) {
